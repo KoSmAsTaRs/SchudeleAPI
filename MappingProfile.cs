@@ -50,14 +50,12 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.subject, opt => opt.Ignore())
             .ForMember(dest => dest.group, opt => opt.Ignore());
 
-        // Маппинг для других сущностей
         CreateMap<Assignments, AssignmentsDto>();
         CreateMap<Department, DepartmentDto>();
         CreateMap<Group, GroupDto>();
         CreateMap<Subject, SubjectDto>();
         CreateMap<Teacher, TeacherDto>();
 
-        // Обратный маппинг (если нужен)
         CreateMap<ScheduleDto, Schedule>().ReverseMap();
     }
 }

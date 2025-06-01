@@ -21,7 +21,6 @@ public class ScheduleService : IScheduleService
         _logger = logger;
     }
 
-    // Изменено название метода для соответствия интерфейсу
     public async Task<IEnumerable<ScheduleDto>> GetAllSchedulesAsync()
     {
         var schedules = await _context.schedule

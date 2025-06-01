@@ -8,10 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 
-// Добавление сервисов
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(); // ← Регистрация Swagger
+builder.Services.AddSwaggerGen(); 
 builder.Services.AddScoped<IScheduleService, ScheduleService>();
 builder.Configuration.AddJsonFile("appsettings.json", optional: false);
 builder.Services.AddControllers()
@@ -28,10 +28,10 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var app = builder.Build();
 
-// Настройка middleware
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();     // ← Важно: до UseHttpsRedirection!
+    app.UseSwagger();     
     app.UseSwaggerUI();
 }
 
@@ -41,6 +41,6 @@ app.MapControllers();
 app.UseSwaggerUI(c => 
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-    c.RoutePrefix = "docs"; // Теперь Swagger будет на /docs
+    c.RoutePrefix = "docs"; 
 });
 app.Run();

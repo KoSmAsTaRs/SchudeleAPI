@@ -149,7 +149,7 @@ public class SchedulesController : ControllerBase
         try
         {
             var schedule = await _scheduleService.GetSchudelByTeacherId(teacher_id);
-            if (schedule == null || !schedule.Any()) // Проверка на пустую коллекцию
+            if (schedule == null || !schedule.Any()) 
             {
                 _logger.LogInformation($"No schedule found for teacher ID: {teacher_id}");
                 return NotFound($"No schedule found for teacher ID: {teacher_id}");
