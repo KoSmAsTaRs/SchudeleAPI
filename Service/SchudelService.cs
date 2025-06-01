@@ -138,15 +138,15 @@ public class ScheduleService : IScheduleService
 
     public async Task<IEnumerable<ScheduleDto>> GetSchudelByTeacherId(int id)
     {
-        var schedule = await _context.schedule
+        var schedules = await _context.schedule
             .Where(s => s.teacher_id == id)
             .Include(s => s.subject)
             .Include(s => s.teacher)
             .Include(s => s.group)
             .AsNoTracking()
             .ProjectTo<ScheduleDto>(_mapper.ConfigurationProvider)
-            .FirstOrDefaultAsync();
+            .ToListAsync();
 
-        return _mapper.Map<IEnumerable<ScheduleDto>>(schedule);
+        return schedules;
     }
 }
