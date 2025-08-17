@@ -7,19 +7,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Microsoft.Extensions.FileProviders; 
 
 var builder = WebApplication.CreateBuilder(args);
-<<<<<<< HEAD
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-=======
-
-
-
-
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(); 
->>>>>>> d4d2a9f263873f62452ffea7b068b854e5fc26ef
 builder.Services.AddScoped<IScheduleService, ScheduleService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
@@ -45,11 +36,6 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
-
-<<<<<<< HEAD
-=======
-
->>>>>>> d4d2a9f263873f62452ffea7b068b854e5fc26ef
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();     
