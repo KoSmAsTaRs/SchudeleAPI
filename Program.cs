@@ -4,43 +4,57 @@ using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using ScheduleServer.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
+using Microsoft.Extensions.FileProviders; 
+
 var builder = WebApplication.CreateBuilder(args);
-
-
-
-// Добавление сервисов
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(); // ← Регистрация Swagger
+builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IScheduleService, ScheduleService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<IGroupService, GroupService>();
 builder.Configuration.AddJsonFile("appsettings.json", optional: false);
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.Converters.Add(new TimeOnlyJsonConverter());
     });
-
-
 builder.Services.AddDbContext<ShcheduleContext>(options => 
-    options.UseNpgsql(builder.Configuration.GetConnectionString("ScheduleDb")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("SchudeleDB")));
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 
 var app = builder.Build();
 
-// Настройка middleware
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();     // ← Важно: до UseHttpsRedirection!
+    app.UseSwagger();     
     app.UseSwaggerUI();
 }
 
+app.UseStaticFiles();
+app.UseCors("AllowAll");
+
 app.UseHttpsRedirection();
 app.UseAuthorization();
+
 app.MapControllers();
+
 app.UseSwaggerUI(c => 
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-    c.RoutePrefix = "docs"; // Теперь Swagger будет на /docs
+    c.RoutePrefix = "docs"; 
 });
+app.MapFallbackToFile("index.html");
+
 app.Run();

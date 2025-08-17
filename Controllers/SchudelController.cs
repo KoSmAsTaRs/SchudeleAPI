@@ -22,8 +22,10 @@ public class SchedulesController : ControllerBase
     }
 
 
+
+
     [HttpGet("GetAllSchedules")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ScheduleDto>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SchudeleDTO>))]
     public async Task<IActionResult> GetAllSchedules()
     {
         try
@@ -40,7 +42,7 @@ public class SchedulesController : ControllerBase
 
 
     [HttpGet("GetScheduleById/{id:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ScheduleDto))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SchudeleDTO))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetScheduleById(int id)
     {
@@ -58,7 +60,7 @@ public class SchedulesController : ControllerBase
 
 
     [HttpGet("GetSchedulesByGroup/{groupId:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ScheduleDto))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SchudeleDTO))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetSchedulesByGroup(int groupId)
     {
@@ -76,7 +78,7 @@ public class SchedulesController : ControllerBase
 
 
     [HttpPost("CreateSchedule")]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ScheduleDto))]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(SchudeleDTO))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateSchedule([FromBody] ScheduleCreateDto dto)
     {
@@ -144,21 +146,21 @@ public class SchedulesController : ControllerBase
     [HttpGet("GetScheduleByTeacherId")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetScheduleByTeacherId(int teacher_id)
+    public async Task<IActionResult> GetScheduleByTeacherName(string teacherName)
     {
         try
         {
-            var schedule = await _scheduleService.GetSchudelByTeacherId(teacher_id);
+            var schedule = await _scheduleService.GetSchudelByTeacherName(teacherName);
             if (schedule == null || !schedule.Any()) // Проверка на пустую коллекцию
             {
-                _logger.LogInformation($"No schedule found for teacher ID: {teacher_id}");
-                return NotFound($"No schedule found for teacher ID: {teacher_id}");
+                _logger.LogInformation($"No schedule found for teacher ID: {teacherName}");
+                return NotFound($"No schedule found for teacher ID: {teacherName}");
             }
             return schedule == null ? NotFound() : Ok(schedule);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"Error deleting schedule with id {teacher_id}");
+            _logger.LogError(ex, $"Error deleting schedule with id {teacherName}");
             return StatusCode(500, "Internal server error");
         }
     }
