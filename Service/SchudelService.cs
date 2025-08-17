@@ -21,7 +21,11 @@ public class ScheduleService : IScheduleService
         _logger = logger;
     }
 
+<<<<<<< HEAD
     public async Task<IEnumerable<SchudeleDTO>> GetAllSchedulesAsync()
+=======
+    public async Task<IEnumerable<ScheduleDto>> GetAllSchedulesAsync()
+>>>>>>> d4d2a9f263873f62452ffea7b068b854e5fc26ef
     {
         var schedules = await _context.schedule
         .Include(s => s.subject)

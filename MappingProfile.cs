@@ -50,6 +50,7 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.subject, opt => opt.Ignore())
             .ForMember(dest => dest.group, opt => opt.Ignore());
 
+<<<<<<< HEAD
         CreateMap<User, UserDto>()
             .ForMember(dest => dest.id, opt => opt.MapFrom(src => src.id))
             .ForMember(dest => dest.name, opt => opt.MapFrom(src => src.name))
@@ -74,6 +75,15 @@ public class MappingProfile : Profile
         CreateMap<GroupDto, Group>()
             .ForMember(dest => dest.name, opt => opt.MapFrom(src => src.name))
             .ForMember(dest => dest.faculty, opt => opt.MapFrom(src => src.faculty));
+=======
+        CreateMap<Assignments, AssignmentsDto>();
+        CreateMap<Department, DepartmentDto>();
+        CreateMap<Group, GroupDto>();
+        CreateMap<Subject, SubjectDto>();
+        CreateMap<Teacher, TeacherDto>();
+
+        CreateMap<ScheduleDto, Schedule>().ReverseMap();
+>>>>>>> d4d2a9f263873f62452ffea7b068b854e5fc26ef
     }
 }
 
